@@ -7,7 +7,7 @@ namespace TestProject.Controllers
     [Route("api/[controller]")]
     public class FileManagerController : ControllerBase
     {
-        private const string ROOT_PATH = "C:\\Users\\Bryon\\dev\\projects\\jobTests\\Browseable";
+        private const string ROOT_PATH = "----CHANGE ME----";
 
         public FileManagerController()
         {

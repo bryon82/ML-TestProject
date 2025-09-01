@@ -1,0 +1,223 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: LightSlateGray;
+    min-height: 100vh;
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: white;
+}
+
+.file-manager {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+    .file-manager.dragover {
+        background-color: #eef;
+        border-color: #66f;
+    }
+
+.file-item {
+    padding: 0.25rem 0.5rem;
+}
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+    .toolbar button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        font-weight: 700;        
+    }
+
+        .toolbar button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+.search-box {
+    display: flex;
+    gap: 5px;
+    margin-left: auto;
+}
+
+    .search-box input {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        width: 200px;
+    }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+    .search-box button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+        .search-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+.breadcrumb {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+    .breadcrumb span {
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+        .breadcrumb span:hover {
+            color: #feca57;
+        }
+
+.file-list {
+    flex: 1;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+    .file-table th {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .file-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+.file-row {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .file-row[data-isdir="true"]:hover td:first-child {
+        color: #feca57;
+    }
+
+    .file-row[data-isdir="true"] td {
+        transition: color 0.3s ease;
+    }
+
+    .file-row:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .file-row.selected {
+        background: rgba(255, 107, 107, 0.3);
+    }
+
+.actions {
+    text-align: center;
+}
+
+    .actions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin: 0 2px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+        .actions button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+.status-bar {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.loading, .empty {
+    text-align: center;
+    padding: 40px;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+

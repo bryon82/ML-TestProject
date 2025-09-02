@@ -127,7 +127,7 @@
             this.manager.setSearchInput(newState.search);
             this.isNavigatingFromUrl = true;
 
-            tmanageris.loadDirectory(newState.path || '').then(() => {
+            this.manager.loadDirectory(newState.path || '').then(() => {
                 if (newState.search) {
                     this.manager.search();
                 }

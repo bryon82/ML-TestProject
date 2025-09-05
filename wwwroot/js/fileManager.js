@@ -17,7 +17,6 @@ export class FileManager {
     async init() {
         this.ui.createFileManager(this.container, this.clipboard);
         this.events.attachEvents();
-        this.events.setupUrlHandling();
 
         const initialState = this.events.getStateFromUrl();
         console.log('Initial state from URL:', initialState);

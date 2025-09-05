@@ -8,6 +8,7 @@
         this.attachToolbarEvents();
         this.attachSearchEvents();
         this.attachDragDropEvents();
+        this.setupUrlHandling();
         this.addShortcuts();
     }
 

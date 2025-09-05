@@ -77,11 +77,11 @@ namespace TestProject.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete([FromBody] DeleteRequest request)
+        public IActionResult Delete([FromBody] DeleteRequest req)
         {
             try
             {
-                var fullPath = GetFullPath(request.Path);
+                var fullPath = GetFullPath(req.Path);
                 if (!IsValidPath(fullPath))
                 {
                     return BadRequest(new { error = "Invalid path" });
@@ -100,7 +100,7 @@ namespace TestProject.Controllers
                     System.IO.File.Delete(fullPath);
                 }
 
-                return Ok(new { message = "Deleted successfully", path = request.Path });
+                return Ok(new { message = "Deleted successfully", path = req.Path });
             }
             catch (Exception ex)
             {
@@ -109,12 +109,12 @@ namespace TestProject.Controllers
         }
 
         [HttpPost("move")]
-        public IActionResult Move([FromBody] MoveRequest request)
+        public IActionResult Move([FromBody] MoveRequest req)
         {
             try
             {
-                var sourcePath = GetFullPath(request.SourcePath);
-                var destinationPath = GetFullPath(request.DestinationPath);
+                var sourcePath = GetFullPath(req.SourcePath);
+                var destinationPath = GetFullPath(req.DestinationPath);
 
                 if (!IsValidPath(sourcePath) || !IsValidPath(destinationPath))
                 {
@@ -141,7 +141,7 @@ namespace TestProject.Controllers
                     System.IO.File.Move(sourcePath, destinationPath);
                 }
 
-                return Ok(new { message = "Moved successfully", from = request.SourcePath, to = request.DestinationPath });
+                return Ok(new { message = "Moved successfully", from = req.SourcePath, to = req.DestinationPath });
             }
             catch (Exception ex)
             {
@@ -150,12 +150,12 @@ namespace TestProject.Controllers
         }
 
         [HttpPost("copy")]
-        public IActionResult Copy([FromBody] CopyRequest request)
+        public IActionResult Copy([FromBody] CopyRequest req)
         {
             try
             {
-                var sourcePath = GetFullPath(request.SourcePath);
-                var destinationPath = GetFullPath(request.DestinationPath);
+                var sourcePath = GetFullPath(req.SourcePath);
+                var destinationPath = GetFullPath(req.DestinationPath);
 
                 if (!IsValidPath(sourcePath) || !IsValidPath(destinationPath))
                 {
@@ -173,7 +173,7 @@ namespace TestProject.Controllers
                     Directory.CreateDirectory(destDir);
                 }
 
-                if (System.IO.File.Exists(destinationPath) && !request.Overwrite)
+                if (System.IO.File.Exists(destinationPath) && !req.Overwrite)
                 {
                     destinationPath = Path.Combine(
                         Path.GetDirectoryName(destinationPath) ?? "",
@@ -186,10 +186,10 @@ namespace TestProject.Controllers
                 }
                 else
                 {
-                    System.IO.File.Copy(sourcePath, destinationPath, request.Overwrite);
+                    System.IO.File.Copy(sourcePath, destinationPath, req.Overwrite);
                 }
 
-                return Ok(new { message = "Copied successfully", from = request.SourcePath, to = request.DestinationPath });
+                return Ok(new { message = "Copied successfully", from = req.SourcePath, to = req.DestinationPath });
             }
             catch (Exception ex)
             {
@@ -198,11 +198,11 @@ namespace TestProject.Controllers
         }
 
         [HttpPost("createfolder")]
-        public IActionResult CreateFolder([FromBody] CreateFolderRequest request)
+        public IActionResult CreateFolder([FromBody] CreateFolderRequest req)
         {
             try
             {
-                var fullPath = GetFullPath(Path.Combine(request.ParentPath ?? "", request.FolderName));
+                var fullPath = GetFullPath(Path.Combine(req.ParentPath ?? "", req.FolderName));
 
                 if (!IsValidPath(fullPath))
                 {
@@ -272,9 +272,9 @@ namespace TestProject.Controllers
         }
 
         [HttpPost("download-batch")]
-        public IActionResult DownloadBatch([FromBody] DownloadBatchRequest request)
+        public IActionResult DownloadBatch([FromBody] DownloadBatchRequest req)
         {
-            if (request.Paths == null || request.Paths.Count == 0)
+            if (req.Paths == null || req.Paths.Count == 0)
             {
                 return BadRequest("No files selected");
             }
@@ -285,7 +285,7 @@ namespace TestProject.Controllers
             {
                 using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
                 {
-                    foreach (var relativePath in request.Paths)
+                    foreach (var relativePath in req.Paths)
                     {
                         var fullPath = GetFullPath(relativePath);
 
@@ -365,6 +365,7 @@ namespace TestProject.Controllers
 
         private static void AddDirectoryToZip(ZipArchive zip, DirectoryInfo directory, string entryName)
         {
+            zip.CreateEntry($"{entryName}/");
             foreach (var file in directory.GetFiles())
             {
                 var fileEntryName = Path.Combine(entryName, file.Name).Replace('\\', '/');

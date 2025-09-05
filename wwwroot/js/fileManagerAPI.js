@@ -1,5 +1,4 @@
-﻿// File Manager API Service
-export class FileManagerAPI {
+﻿export class FileManagerAPI {
     constructor(baseUrl = '/api/filemanager') {
         this.baseUrl = baseUrl;
     }

@@ -6,9 +6,11 @@ export class FileManagerAPI {
 
     async request(url, options = {}) {
         try {
+            const isFormData = options.body instanceof FormData;
+
             const response = await fetch(url, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
                     ...options.headers
                 },
                 ...options
@@ -83,15 +85,11 @@ export class FileManagerAPI {
         }
         formData.append("path", path);
 
-        const res = await fetch(`${this.baseUrl}/upload`, {
+        return this.request(`${this.baseUrl}/upload`, {
             method: "POST",
             body: formData
         });
-
-        if (!res.ok) throw new Error("Upload failed");
-        
-        return res.json();
-    }       
+    }
 
     getDownloadUrl(path) {
         return `${this.baseUrl}/download?path=${encodeURIComponent(path)}`;
